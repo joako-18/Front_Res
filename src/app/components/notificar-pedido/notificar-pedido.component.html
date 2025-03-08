@@ -1,0 +1,19 @@
+<div class="container">
+    <h3>Notificar Pedido</h3>
+  
+    <div>
+      <label for="idPedido">ID del Pedido:</label>
+      <input
+        type="number"
+        [(ngModel)]="idPedido"
+        placeholder="Ingrese el ID del pedido"
+      />
+    </div>
+  
+    <button (click)="notificarPedido()">Enviar Notificación</button>
+  
+    <div *ngIf="mensaje" class="mensaje">
+      {{ mensaje }}
+    </div>
+  </div>
+  

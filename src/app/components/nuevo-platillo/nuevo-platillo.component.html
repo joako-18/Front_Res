@@ -1,0 +1,22 @@
+<div class="card">
+  <h2>Nuevo platillo</h2>
+  <form (ngSubmit)="agregarPlatillo()">
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" [(ngModel)]="nombre" name="nombre" required />
+
+    <div class="flex">
+      <div>
+        <label for="precio">Precio</label>
+        <input type="number" id="precio" [(ngModel)]="precio" name="precio" required />
+      </div>
+      <div>
+        <label for="tiempo">Tiempo de preparación:</label>
+        <input type="number" id="tiempo" [(ngModel)]="tiempoPreparacion" name="tiempo" required />
+      </div>
+    </div>
+
+    <button type="submit" class="btn agregar">Agregar</button>
+  </form>
+
+  <p *ngIf="mensaje" class="mensaje">{{ mensaje }}</p>
+</div>

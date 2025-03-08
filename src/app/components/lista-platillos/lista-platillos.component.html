@@ -1,0 +1,28 @@
+<div class="tabla">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>NOMBRE</th>
+        <th>Precio</th>
+        <th>Tiempo de preparación</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let platillo of platillos">
+        <td>{{ platillo.id }}</td>
+        <td>{{ platillo.nombre }}</td>
+        <td> {{platillo.precio}} </td>
+        <td>{{ platillo.tiempo_preparacion }} min</td>
+        <td>
+          <button (click)="platillo.id ? eliminarPlatillo(platillo.id) : null" class="btn eliminar">
+            Eliminar
+          </button>          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p *ngIf="platillos.length === 0" class="mensaje">No hay platillos disponibles</p>
