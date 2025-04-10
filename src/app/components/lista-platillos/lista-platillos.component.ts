@@ -16,6 +16,10 @@ export class ListaPlatillosComponent implements OnInit {
 
   ngOnInit() {
     this.obtenerPlatillos();
+
+    this.platilloService.getPlatillos().subscribe(() => {
+      this.obtenerPlatillos();
+    });
   }
 
   obtenerPlatillos() {

@@ -14,6 +14,7 @@ export interface Platillo {
 })
 export class PlatilloService {
   private apiUrl = 'http://localhost:8080/platillos';
+  private pedidoUrl = 'http://localhost:8080/pedidos/completado';
 
   constructor(private http: HttpClient) {}
 
@@ -31,5 +32,12 @@ export class PlatilloService {
 
   deletePlatillo(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  notificarPedido(pedidoId: number, estado: string): Observable<any> {
+    return this.http.post(this.pedidoUrl, {
+      pedido_id: pedidoId,
+      estado: estado
+    });
   }
 }

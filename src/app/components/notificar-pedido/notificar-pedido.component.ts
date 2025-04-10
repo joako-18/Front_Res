@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { PlatilloService } from '../../services/platillo.service';
 
 @Component({
   selector: 'app-notificar-pedido',
@@ -11,19 +12,39 @@ import { FormsModule } from '@angular/forms';
 })
 export class NotificarPedidoComponent {
   idPedido: number = 0;
+  estado: string = '';
   mensaje: string = '';
 
+  constructor(private platilloService: PlatilloService) {}
+
   notificarPedido() {
-    if (this.idPedido > 0) {
+    if (this.idPedido > 0 && this.estado) {
       this.mensaje = 'Enviando notificación...';
 
-      // Simulamos un retraso de 2 segundos para la notificación
-      setTimeout(() => {
-        this.mensaje = `✅ El pedido con ID ${this.idPedido} se ha realizado correctamente.`;
-        this.idPedido = 0;
-      }, 2000);
+      this.platilloService.notificarPedido(this.idPedido, this.estado).subscribe({
+        next: () => {
+          this.mensaje = `✅ El pedido con ID ${this.idPedido} se ha notificado correctamente.`;
+
+          // 🧽 Eliminar el platillo después de notificar
+          this.platilloService.deletePlatillo(this.idPedido).subscribe({
+            next: () => {
+              console.log(`Platillo con ID ${this.idPedido} eliminado`);
+              this.platilloService.getPlatillos()
+            },
+            error: (error) => {
+              console.error('Error al eliminar el platillo:', error);
+            }
+          });
+
+          this.idPedido = 0;
+          this.estado = '';
+        },
+        error: (err) => {
+          this.mensaje = `❌ Error: ${err.message}`;
+        }
+      });
     } else {
-      this.mensaje = '❌ Por favor ingrese un ID válido.';
+      this.mensaje = '❌ Por favor ingrese un ID y un estado válidos.';
     }
   }
 }
